@@ -8,14 +8,23 @@ import reducer from './containers/HomePage/reducer';
 import {createStore, applyMiddleware} from 'redux';
 import createSagaMiddleware  from 'redux-saga';
 import rootSaga from './containers/HomePage/saga';
+import { createGlobalStyle }  from 'styled-components';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(reducer, applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(rootSaga);
 
-ReactDOM.render(
+const GlobalStyles = createGlobalStyle`
+  .globalParentWrapper {
+    width: 200px;
+    background-color: black;
+    color: white;
+  }
+`
+ReactDOM.hydrate(
   <Provider store={store}>
+    <GlobalStyles />
     <App />
   </Provider>,
   document.getElementById('root')
